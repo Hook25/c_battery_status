@@ -11,4 +11,4 @@ debug:
 clean:
 	rm battery_status
 
-.PHONY:build debug clean
+.PHONY:build debug clean nonotify
