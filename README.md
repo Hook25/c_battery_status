@@ -2,7 +2,7 @@
 
 A tiny battery status blocklet for i3bar written in C. Prints the percentage of each battery present in the system and its status. This blocklet depends on `acpi` for the battery status and `libnotify` when compiled with the notification feature.
 
-This is how the blockelt looks with two batteries under different conditions:
+This is how the blocklet looks with two batteries under different conditions:
 
 ![Blocklet Preview](./preview.png)
 
