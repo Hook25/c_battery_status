@@ -13,13 +13,20 @@
 #define S_UNKNOWN  "Unknown,"
 #define S_FULL "Full,"
 #define S_DISCHARGING "Discharging,"
+#define S_NOT_CHARGING "Not"
+#define S_NOT_CHARGING_1 "charging," //well the thing has a space in it
 
 #define L_C "C"
 #define L_U "U"
 #define L_D "D"
 #define L_F "F"
+#define L_N "N"
 
+#ifdef DEBUG
+#define expect(x) do{if(!(x)){ printf("Failed expectance at %s:%d", __FILE__, __LINE__); return 1;}}while(0)
+#else
 #define expect(x) do{if(!(x)){ return 1; }}while(0)
+#endif
 
 #if NOTIFY
 #include <libnotify/notify.h>
@@ -84,6 +91,10 @@ int elab_line(char line[LINE_SIZE]){
     guard("100", 0); 
     printf(STATUS, label, "ULL");
     return 0; //sucks, but works
+  }else if(!strcmp(i, S_NOT_CHARGING)){
+    label = L_N;
+    i = strtok(0, sep);
+    expect(!(strcmp(i, S_NOT_CHARGING_1)));
   }else{
     expect(!(strcmp(i, S_UNKNOWN)));
   }
@@ -104,10 +115,12 @@ int main(void){
     fprintf(stderr, "Pipe failed to open\n");
     return 1;
   }
+  int l = 0;
   while(fgets(line, LINE_SIZE, f)){
+    l+=1;
     int err = elab_line(line);
     if(err){
-      fprintf(stderr, "Failed to elab line %s\n", line);
+      fprintf(stderr, "Failed to elab line %d\n", l);
     }
     memset(line, 0, sizeof(line));
   }
