@@ -28,12 +28,12 @@
 #define expect(x) do{if(!(x)){ return 1; }}while(0)
 #endif
 
+char charging = 0;
+
 #if NOTIFY
 #include <libnotify/notify.h>
 #include <ctype.h>
 #define NAME_TITLE "BatteryStatus"
-
-char charging = 0;
 
 #define NOTIFICATION_PERC 5
 
